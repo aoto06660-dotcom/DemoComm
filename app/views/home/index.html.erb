@@ -1,0 +1,16 @@
+<h1>DemoComm</h1>
+<p>楽曲制作をシームレスに</p>
+
+<% if user_signed_in? %>
+  <p>ログイン中：<%= current_user.name %></p>
+
+  <%= button_to "ログアウト",
+                destroy_user_session_path,
+                method: :delete %>
+
+<% else %>
+
+  <%= link_to "新規登録", new_user_registration_path %>
+  <%= link_to "ログイン", new_user_session_path %>
+
+<% end %>
