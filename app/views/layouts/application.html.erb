@@ -24,6 +24,10 @@
   </head>
 
   <body>
+
+  <% if user_signed_in? %>
+    <%= link_to "マイプロジェクト", mine_projects_path %>
+  <% end %>
     <%= yield %>
   </body>
 </html>

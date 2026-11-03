@@ -1,0 +1,27 @@
+<h1><%= @project.title %></h1>
+
+<p>
+  作成者：<%= @project.user.name %>
+</p>
+
+<p>
+  公開範囲：<%= @project.visibility_public? ? "公開" : "非公開" %>
+</p>
+
+<p>
+  作成日：<%= @project.created_at.strftime("%Y年%m月%d日") %>
+</p>
+
+<%= link_to "プロジェクト一覧へ戻る", projects_path %>
+
+<% if user_signed_in? && @project.user_id == current_user.id %>
+  <%= link_to "編集", edit_project_path(@project) %>
+
+  <%= button_to "削除",
+                project_path(@project),
+                method: :delete,
+                data: {
+                  turbo_confirm: "本当に削除しますか？"
+                } %>
+<% end %>
+

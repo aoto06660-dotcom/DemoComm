@@ -1,0 +1,22 @@
+<% if @project.errors.any? %>
+  <ul>
+    <% @project.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with model: @project do |f| %>
+  <div>
+    <%= f.label :title, "楽曲タイトル" %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.label :visibility, "公開範囲" %>
+    <%= f.select :visibility,
+                 [["非公開", "private"], ["公開", "public"]] %>
+  </div>
+
+  <%= f.submit "プロジェクトを作成" %>
+<% end %>
