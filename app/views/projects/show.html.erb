@@ -15,6 +15,8 @@
 <%= link_to "プロジェクト一覧へ戻る", projects_path %>
 
 <% if user_signed_in? && @project.user_id == current_user.id %>
+  <%= link_to "音源をアップロード", new_project_audio_version_path(@project) %>
+
   <%= link_to "編集", edit_project_path(@project) %>
 
   <%= button_to "削除",
@@ -24,4 +26,44 @@
                   turbo_confirm: "本当に削除しますか？"
                 } %>
 <% end %>
+
+<h2>アップロード音源一覧</h2>
+
+<% if @audio_versions.any? %>
+  <ul>
+    <% @audio_versions.each do |audio_version| %>
+      <li>
+        <h3>Version <%= audio_version.version_number %></h3>  
+
+        <% if audio_version.audio_file.attached? %>
+          <audio controls preload="metadata">
+            <source
+              src="<%= play_audio_version_path(audio_version) %>"
+              type="<%= audio_version.audio_file.blob.content_type %>"
+            お使いのブラウザは音源再生に対応していません>
+          </audio>
+        <% end %>
+
+        <p>
+          ファイル名：
+          <%= audio_version.audio_file.filename %>
+        </p>
+
+        <p>
+          アップロード日時：
+          <%= audio_version.created_at.strftime("%Y-%m-%d %H時%M分%S秒") %>
+        </p>
+
+        <p>
+          アップロード者：
+          <%= audio_version.uploaded_by.name %>
+        </p>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>まだ音源がアップロードされていません</p>
+<% end %>
+
+
 

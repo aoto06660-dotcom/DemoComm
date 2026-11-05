@@ -1,0 +1,24 @@
+<h1>音源をアップロード</h1>
+
+<h2><%= @project.title %></h2>
+
+<% if @audio_version.errors.any? %>
+  <ul>
+    <% @audio_version.errors.full_messages do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with model: [@project, @audio_version] do |f| %>
+  <div>
+    <%= f.label :audio_file, "音源ファイル" %>
+    <%= f.file_field :audio_file, accept: ".mp3,.wav,audio/mpeg,audio/wav" %>
+  </div>
+
+  <div>
+    <%= f.submit "アップロード" %>
+  </div>
+<% end %>
+
+<%= link_to "プロジェクトの詳細へ戻る", project_path(@project) %>

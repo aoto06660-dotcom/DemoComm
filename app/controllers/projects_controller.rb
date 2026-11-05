@@ -16,6 +16,9 @@ class ProjectsController < ApplicationController
            (user_signed_in? && @project.user_id == current_user.id)
       raise ActiveRecord::RecordNotFound
     end
+
+    @audio_versions = @project.audio_versions.order(version_number: :desc)
+    
   end
 
   def new
