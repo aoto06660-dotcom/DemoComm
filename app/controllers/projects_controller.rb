@@ -17,7 +17,9 @@ class ProjectsController < ApplicationController
       raise ActiveRecord::RecordNotFound
     end
 
-    @audio_versions = @project.audio_versions.order(version_number: :desc)
+    @audio_versions = @project.audio_versions
+                      .includes(comments: :user)
+                      .order(version_number: :desc)
     
   end
 

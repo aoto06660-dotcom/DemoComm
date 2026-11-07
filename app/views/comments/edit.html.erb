@@ -1,0 +1,24 @@
+<h2>コメント編集</h2>
+
+<p>
+  対象音源：Version <%= @audio_version.version_number %>
+</p>
+
+<% if @comment.errors.any? %>
+  <ul>
+    <% @comment.errors.full_messages do |message| %>
+      <%= message %>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with model: [@project, @audio_version, @comment] do |f| %>
+  <div>
+    <%= f.label :body, "コメント" %>
+    <%= f.text_area :body, rows: 4 %>
+  </div>
+
+  <%= f.submit "更新する" %>
+<% end %>
+
+<%= link_to "戻る", project_path(@project) %>

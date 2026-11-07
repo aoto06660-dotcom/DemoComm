@@ -7,7 +7,9 @@ Rails.application.routes.draw do
       get :mine
     end
 
-    resources :audio_versions, only: [:new, :create]
+    resources :audio_versions, only: [:new, :create] do
+      resources :comments, only: [:create, :edit, :update, :destroy]
+    end
   end
 
   resources :audio_versions, only: [] do
@@ -15,6 +17,8 @@ Rails.application.routes.draw do
       get :play
     end
   end
+
+  
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
