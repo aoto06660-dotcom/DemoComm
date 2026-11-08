@@ -1,42 +1,59 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<h1>アカウント設定</h1>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+<%= form_with model: resource,
+              url: registration_path(resource_name),
+              method: :patch do |f|%>
   <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <p><%= f.label :email %></p>
-    <p><%= f.email_field :email, autofocus: true, autocomplete: "email" %></p>
+  <div>
+    <p><%= f.label :email, "メールアドレス" %></p>
+    <p><%= f.email_field :email, autocomplete: "email" %></p>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
 
-  <div class="field">
-    <p><%= f.label :password %> <i>(leave blank if you don't want to change it)</i></p>
+  <div>
+    <p><%= f.label :password, "新しいパスワード" %></p>
     <p><%= f.password_field :password, autocomplete: "new-password" %></p>
     <% if @minimum_password_length %>
-      <p><em><%= @minimum_password_length %> characters minimum</em></p>
+      <p><em><%= @minimum_password_length %>文字以上で設定してください</em></p>
     <% end %>
   </div>
 
-  <div class="field">
-    <p><%= f.label :password_confirmation %></p>
+  <div>
+    <p><%= f.label :password_confirmation, "新しいパスワード（確認）" %></p>
     <p><%= f.password_field :password_confirmation, autocomplete: "new-password" %></p>
   </div>
 
-  <div class="field">
-    <p><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i></p>
+  <div>
+    <p><%= f.label :current_password, "現在のパスワード" %></p>
     <p><%= f.password_field :current_password, autocomplete: "current-password" %></p>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Update" %>
+  <div>
+    <%= f.submit "アカウント情報を更新" %>
   </div>
 <% end %>
 
-<h3>Cancel my account</h3>
+<%= link_to "戻る", :back %>
 
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+<hr>
 
-<%= link_to "Back", :back %>
+<h2>アカウント削除</h2>
+
+<p>
+  アカウントを削除すると、作成したプロジェクト、
+  アップロードした音源、投稿したコメント、
+  プロフィール情報等がすべて削除されます。
+</p>
+
+<p>この操作は取り消せません</p>
+
+<%= button_to "アカウントを削除する",
+              registration_path(resource_name),
+              method: :delete,
+              data: {
+                turbo_confirm: "本当に削除しますか？"
+              } %>

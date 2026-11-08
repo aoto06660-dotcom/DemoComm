@@ -27,6 +27,7 @@
 
   <% if user_signed_in? %>
     <%= link_to "マイプロジェクト", mine_projects_path %>
+    <%= link_to "マイプロフィール", profile_path %>
   <% end %>
     <%= yield %>
   </body>

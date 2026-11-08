@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get "home/index"
+  get "/profile/avatar", to: "profiles#avatar", as: :profile_avatar
   devise_for :users
 
   resources :projects do
@@ -17,6 +18,8 @@ Rails.application.routes.draw do
       get :play
     end
   end
+
+  resource :profile, only:[:show, :edit, :update]
 
   
 

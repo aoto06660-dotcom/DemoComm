@@ -1,0 +1,29 @@
+<h1>マイプロフィール</h1>
+
+<% if @user.avatar.attached? %>
+  <%= image_tag profile_avatar_path,
+                size: "120x120",
+                alt: "プロフィール画像" %>
+<% else %>
+  <%= image_tag "profile_no_image.png",
+                size: "120x120",
+                alt: "プロフィール画像" %>
+<% end %>
+
+<p>
+  ユーザー名：
+  <%= @user.name %>
+</p>
+
+<p>
+  メールアドレス：
+  <%= @user.email %>
+</p>
+
+<p>
+  自己紹介：
+  <%= @user.bio.presence || "未設定" %>
+</p>
+
+<%= link_to "プロフィール/アカウントの設定", edit_profile_path %>
+<%= link_to "プロジェクト一覧へ", projects_path %> 
