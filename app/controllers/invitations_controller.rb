@@ -8,9 +8,10 @@ class InvitationsController < ApplicationController
 
   def accept
     if @invitation.update(status: :accepted)
+      flash[:show_my_projects_link] = true
       redirect_to invitations_path, notice: "招待を承認しました"
     else
-      redirect_to invitations_path, notice: "招待の承認に失敗しました"
+      redirect_to invitations_path, alert: "招待の承認に失敗しました"
     end
   end
 

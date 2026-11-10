@@ -1,0 +1,72 @@
+<%= tag.details id: dom_id(audio_version), class: "panel version", open: audio_version_counter.zero?,
+                data: { controller: "audio-comment", action: "toggle->audio-comment#pauseWhenClosed hashchange@window->audio-comment#revealFromAnchor" } do %>
+  <summary>
+    <strong>Version <%= audio_version.version_number %></strong>
+    <% if audio_version_counter.zero? %><span class="badge">最新版</span><% end %>
+  </summary>
+
+  <div class="version__content stack">
+    <p class="muted">
+      <%= audio_version.uploaded_by.name %> · <%= audio_version.created_at.strftime("%Y/%m/%d %H:%M") %>
+      <% if audio_version.audio_file.attached? %> · <%= audio_version.audio_file.filename %><% end %>
+    </p>
+    <% if audio_version.audio_file.attached? %>
+      <audio controls preload="none" data-audio-comment-target="audio" data-action="play->audio-comment#pauseOtherVersions"
+             aria-label="Version <%= audio_version.version_number %> の音源">
+        <source src="<%= play_audio_version_path(audio_version) %>" type="<%= audio_version.audio_file.blob.content_type %>">
+        お使いのブラウザは音源再生に対応していません。
+      </audio>
+    <% end %>
+
+    <% if user_signed_in? %>
+      <%= form_with model: [project, audio_version, Comment.new], namespace: dom_id(audio_version) do |f| %>
+        <div>
+          <%= f.label :body, "Version #{audio_version.version_number} にコメント" %>
+          <%= f.text_area :body, rows: 3, required: true, placeholder: "気づいたことや変更案を入力" %>
+        </div>
+        <% if audio_version.audio_file.attached? %>
+          <%= f.hidden_field :playback_seconds, data: { audio_comment_target: "seconds" } %>
+          <div class="actions">
+            <span class="muted" aria-live="polite">再生位置 <span class="timestamp" data-audio-comment-target="display">未設定</span></span>
+            <button type="button" class="button button--secondary" data-action="audio-comment#captureTime">現在位置を付ける</button>
+            <button type="button" class="button button--secondary" data-action="audio-comment#clearTime"
+                    data-audio-comment-target="clearButton" hidden>時刻を外す</button>
+          </div>
+        <% end %>
+        <%= f.submit "コメントを投稿" %>
+      <% end %>
+
+      <section class="comments" aria-label="Version <%= audio_version.version_number %> のコメント一覧">
+        <h3>コメント</h3>
+        <% audio_version.comments.each do |comment| %>
+          <article class="comment">
+            <div class="actions">
+              <strong><%= comment.user.name %></strong>
+              <time class="muted" datetime="<%= comment.created_at.iso8601 %>"><%= comment.created_at.strftime("%Y/%m/%d %H:%M") %></time>
+              <% if comment.playback_seconds.present? && audio_version.audio_file.attached? %>
+                <% minutes, seconds = comment.playback_seconds.divmod(60) %>
+                <% timestamp = format("%02d:%02d", minutes, seconds) %>
+                <button type="button" class="button button--secondary timestamp" aria-label="<%= timestamp %> から再生"
+                        data-action="audio-comment#seekTo" data-seconds="<%= comment.playback_seconds %>"><%= timestamp %></button>
+              <% end %>
+            </div>
+            <p class="comment__body"><%= comment.body %></p>
+            <% if comment.user_id == current_user.id %>
+              <div class="actions">
+                <%= link_to "編集", edit_project_audio_version_comment_path(project, audio_version, comment), class: "button button--secondary" %>
+                <%= button_to "削除", project_audio_version_comment_path(project, audio_version, comment),
+                              method: :delete, class: "button button--danger",
+                              data: { turbo_confirm: "このコメントを削除しますか？" } %>
+              </div>
+            <% end %>
+          </article>
+        <% end %>
+        <% if audio_version.comments.empty? %>
+          <p class="muted">まだコメントはありません。</p>
+        <% end %>
+      </section>
+    <% else %>
+      <p>コメントを閲覧・投稿するには<%= link_to "ログイン", new_user_session_path %>してください。</p>
+    <% end %>
+  </div>
+<% end %>

@@ -1,31 +1,21 @@
 <h1>あなた宛の招待</h1>
 
-  <% if @invitations.any? %>
-
+<% if @invitations.any? %>
+  <div class="card-grid">
     <% @invitations.each do |invitation| %>
-      <div>
-        <h3><%= invitation.project.title %></h3>
-
-        <p>
-          プロジェクト所有者：
-          <%= invitation.project.user.name %>
-        </p>
-
-        <p>状態：承認待ち</p>
-
-        <%= button_to "承認する",
-                      accept_invitation_path(invitation),
-                      method: :patch %>
-
-        <%= button_to "拒否する",
-                      reject_invitation_path(invitation),
-                      method: :delete,
-                      data: {
-                        turbo_confirm: "この招待を拒否しますか？"
-                        } %>
-      </div>
+      <article class="panel">
+        <span class="badge">承認待ち</span>
+        <h2><%= invitation.project.title %></h2>
+        <p class="muted">招待元 <%= invitation.project.user.name %></p>
+        <div class="actions">
+          <%= button_to "承認する", accept_invitation_path(invitation), method: :patch %>
+          <%= button_to "拒否する", reject_invitation_path(invitation), method: :delete,
+                        class: "button button--danger",
+                        data: { turbo_confirm: "この招待を拒否しますか？" } %>
+        </div>
+      </article>
     <% end %>
-
-  <% else %>
-    <p>現在届いている招待はありません</p>
-  <% end %>
+  </div>
+<% else %>
+  <p class="empty">現在届いている招待はありません。</p>
+<% end %>

@@ -8,10 +8,10 @@ class CommentsController < ApplicationController
     @comment.user = current_user
 
     if @comment.save
-      redirect_to project_path(@audio_version.project),
+      redirect_to project_path(@project, anchor: helpers.dom_id(@audio_version)),
                   notice: "コメントを投稿しました"
     else
-      redirect_to project_path(@audio_version.project),
+      redirect_to project_path(@project, anchor: helpers.dom_id(@audio_version)),
                   alert: "コメントを入力してください"
     end
   end
@@ -21,7 +21,7 @@ class CommentsController < ApplicationController
 
   def update
     if @comment.update(comment_params)
-      redirect_to project_path(@project),
+      redirect_to project_path(@project, anchor: helpers.dom_id(@audio_version)),
                   notice: "コメントを更新しました"
     else
       render :edit, status: :unprocessable_entity
@@ -31,7 +31,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment.destroy!
 
-    redirect_to project_path(@audio_version.project),
+    redirect_to project_path(@project, anchor: helpers.dom_id(@audio_version)),
                 notice: "コメントを削除しました"
   end
 

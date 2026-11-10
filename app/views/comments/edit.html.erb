@@ -1,13 +1,13 @@
-<h2>コメント編集</h2>
+<h1>コメント編集</h1>
 
 <p>
   対象音源：Version <%= @audio_version.version_number %>
 </p>
 
 <% if @comment.errors.any? %>
-  <ul>
-    <% @comment.errors.full_messages do |message| %>
-      <%= message %>
+  <ul class="feedback feedback--error" role="alert">
+    <% @comment.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
     <% end %>
   </ul>
 <% end %>
@@ -21,4 +21,4 @@
   <%= f.submit "更新する" %>
 <% end %>
 
-<%= link_to "戻る", project_path(@project) %>
+<%= link_to "戻る", project_path(@project, anchor: dom_id(@audio_version)) %>

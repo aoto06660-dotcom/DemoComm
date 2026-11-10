@@ -1,18 +1,19 @@
-<h1>公開プロジェクト一覧</h1>
-
-<% if user_signed_in? %>
-  <%= link_to "プロジェクトの新規作成", new_project_path %>
-<% end %>
-
-<% if @projects.any? %>
-  <% @projects.each do |project| %>
-    <div>
-      <h2>
-        <%= link_to project.title, project_path(project) %>
-      </h2>
-      <p>作成者：<%= project.user.name %><p>
-    </div>
+<div class="section-heading">
+  <h1>公開プロジェクト</h1>
+  <% if user_signed_in? %>
+    <%= link_to "プロジェクトを作成", new_project_path, class: "button" %>
   <% end %>
-<% else %>
-  <p>公開されているプロジェクトはありません</p>
+</div>
+
+<div class="card-grid">
+  <% @projects.each do |project| %>
+    <article class="panel">
+      <span class="badge">公開</span>
+      <h2><%= link_to project.title, project_path(project) %></h2>
+      <p class="muted">オーナー <%= project.user.name %></p>
+    </article>
+  <% end %>
+</div>
+<% if @projects.empty? %>
+  <p class="empty">公開されているプロジェクトはありません。</p>
 <% end %>

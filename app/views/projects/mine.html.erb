@@ -1,46 +1,34 @@
-<h1>マイプロジェクト</h1>
+<div class="section-heading">
+  <h1>マイプロジェクト</h1>
+  <%= link_to "プロジェクトを作成", new_project_path, class: "button" %>
+</div>
 
-<%= link_to "新規プロジェクト作成", new_project_path %>
-
-<h2>作成したプロジェクト</h2>
-
-<% if @my_projects.any? %>
-  <% @my_projects.each do |project| %>
-    <div>
-      <h3>
-        <%= link_to project.title, project_path(project) %>
-      </h3>
-
-      <p>
-        <%= project.visibility_public? ? "公開" : "非公開" %>
-      </p>
-
-      <span>
-        作成日：
-        <%= project.created_at.strftime("%Y年%m月%d日 %H時%M分") %>
-      </span>
-    </div>
-  <% end %>
-<% else %>
-  <p>作成したプロジェクトはありません</p>
-<% end %>
-
-<h2>参加中のプロジェクト</h2>
-
-<% if @joined_projects.any? %>
-  <% @joined_projects.each do |project| %>
-    <div>
-      <h3>
-        <%= link_to project.title, project_path(project) %>
-      </h3>
-
-      <p>オーナー：<%= project.user.name %></p>
-
-      <p>
-        <%= project.visibility_public? ? "公開" : "非公開" %>
-      </p>
-    </div>
-  <% end %>
-<% else %>
-  <p>参加中のプロジェクトはありません</p>
+<% [["作成したプロジェクト", @my_projects, "オーナー"], ["参加中のプロジェクト", @joined_projects, "参加中"]].each do |title, projects, role| %>
+  <section class="list-section">
+    <h2><%= title %></h2>
+    <% if projects.any? %>
+      <div class="card-grid">
+        <% projects.each do |project| %>
+          <article class="panel">
+            <div class="actions">
+              <span class="badge"><%= project.visibility_public? ? "公開" : "非公開" %></span>
+              <span class="badge"><%= role %></span>
+            </div>
+            <h3><%= link_to project.title, project_path(project) %></h3>
+            <p class="muted">
+              <% if role == "オーナー" %>
+                <%= project.created_at.strftime("%Y年%m月%d日 %H時%M分") %> 作成
+              <% else %>
+                オーナー <%= project.user.name %>
+              <% end %>
+            </p>
+          </article>
+        <% end %>
+      </div>
+    <% elsif role == "オーナー" %>
+      <p class="empty">作成したプロジェクトはありません。<%= link_to "プロジェクトを作成", new_project_path %></p>
+    <% else %>
+      <p class="empty">参加中のプロジェクトはありません。<%= link_to "届いている招待を確認", invitations_path %></p>
+    <% end %>
+  </section>
 <% end %>

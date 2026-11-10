@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
     <title><%= content_for(:title) || "Demo Comm" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -25,11 +25,39 @@
 
   <body>
 
-  <% if user_signed_in? %>
-    <%= link_to "マイプロジェクト", mine_projects_path %>
-    <%= link_to "マイプロフィール", profile_path %>
-    <%= link_to "届いている招待", invitations_path %>
-  <% end %>
-    <%= yield %>
+    <a class="skip-link" href="#main-content">本文へ移動</a>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <%= link_to "DemoComm", home_index_path, class: "brand" %>
+        <nav aria-label="メインナビゲーション">
+          <%= link_to "公開プロジェクト", projects_path, aria: { current: current_page?(projects_path) ? "page" : nil } %>
+          <% if user_signed_in? %>
+            <%= link_to "マイプロジェクト", mine_projects_path, aria: { current: current_page?(mine_projects_path) ? "page" : nil } %>
+            <%= link_to "招待", invitations_path, aria: { current: current_page?(invitations_path) ? "page" : nil } %>
+            <%= link_to "プロフィール", profile_path, aria: { current: current_page?(profile_path) ? "page" : nil } %>
+          <% else %>
+            <%= link_to "ログイン", new_user_session_path, aria: { current: current_page?(new_user_session_path) ? "page" : nil } %>
+          <% end %>
+        </nav>
+        <% if user_signed_in? %>
+          <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "button button--secondary" %>
+        <% end %>
+      </div>
+    </header>
+
+    <main id="main-content" class="page" tabindex="-1">
+      <% if notice.present? %>
+        <div class="feedback" role="status" data-turbo-temporary>
+          <%= notice %>
+          <% if user_signed_in? && flash[:show_my_projects_link] %>
+            <%= link_to "マイプロジェクトで確認", mine_projects_path %>
+          <% end %>
+        </div>
+      <% end %>
+      <% if alert.present? %>
+        <div class="feedback feedback--error" role="alert" data-turbo-temporary><%= alert %></div>
+      <% end %>
+      <%= yield %>
+    </main>
   </body>
 </html>

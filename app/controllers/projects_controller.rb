@@ -33,6 +33,7 @@ class ProjectsController < ApplicationController
     @project = current_user.projects.new(project_params)
 
     if @project.save
+      flash[:show_my_projects_link] = true
       redirect_to projects_path, notice: "プロジェクトを作成しました"
     else
       render :new, status: :unprocessable_entity

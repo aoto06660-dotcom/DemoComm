@@ -3,8 +3,8 @@
 <h2><%= @project.title %></h2>
 
 <% if @audio_version.errors.any? %>
-  <ul>
-    <% @audio_version.errors.full_messages do |message| %>
+  <ul class="feedback feedback--error" role="alert">
+    <% @audio_version.errors.full_messages.each do |message| %>
       <li><%= message %></li>
     <% end %>
   </ul>
@@ -13,7 +13,8 @@
 <%= form_with model: [@project, @audio_version] do |f| %>
   <div>
     <%= f.label :audio_file, "音源ファイル" %>
-    <%= f.file_field :audio_file, accept: ".mp3,.wav,audio/mpeg,audio/wav" %>
+    <p id="audio-formats" class="muted">対応形式はMP3とWAVです。</p>
+    <%= f.file_field :audio_file, accept: ".mp3,.wav,audio/mpeg,audio/wav", aria: { describedby: "audio-formats" } %>
   </div>
 
   <div>

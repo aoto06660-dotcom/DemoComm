@@ -1,204 +1,70 @@
-<h1><%= @project.title %></h1>
+<header class="project-heading">
+  <%= link_to "公開プロジェクト一覧", projects_path %>
+  <h1><%= @project.title %></h1>
+  <div class="actions">
+    <span class="badge">公開範囲 <%= @project.visibility_public? ? "公開" : "非公開" %></span>
+    <span class="badge">役割 <%= @project.owner?(current_user) ? "オーナー" : (@project.accepted_member?(current_user) ? "参加中" : "閲覧者") %></span>
+  </div>
+  <p class="muted"><%= @project.user.name %> · <%= @project.created_at.strftime("%Y年%m月%d日") %> 作成</p>
+</header>
 
-<p>
-  作成者：<%= @project.user.name %>
-</p>
-
-<p>
-  公開範囲：<%= @project.visibility_public? ? "公開" : "非公開" %>
-</p>
-
-<p>
-  作成日：<%= @project.created_at.strftime("%Y年%m月%d日") %>
-</p>
-
-<%= link_to "プロジェクト一覧へ戻る", projects_path %>
-
-<% if @project.uploadable_by?(current_user) %>
-  <%= link_to "音源をアップロード", new_project_audio_version_path(@project) %>
-<% end %>
-
-<% if @project.owner?(current_user) %>
-  <%= link_to "編集", edit_project_path(@project) %>
-
-  <%= button_to "削除",
-                project_path(@project),
-                method: :delete,
-                data: {
-                  turbo_confirm: "本当に削除しますか？"
-                } %>
-  <h3>メンバーを招待</h3>
-
-  <%= form_with url: project_project_memberships_path(@project),
-                method: :post do |f| %>
-    <div>
-      <%= f.label :email, "メールアドレス" %>
-      <%= f.email_field :email,
-                        required: true,
-                        placeholder: "member@example.com" %>
-    </div>
-
-    <%= f.submit "招待する" %>
-    
-  <% end %>
-  
-<% end %>
-
-<h2>プロジェクトメンバー</h2>
-
-<div>
-  <p>
-    <strong><%= @project.user.name %></strong>
-    （オーナー）
-  </p>
-</div>
-
-<% if @memberships.any? %>
-  <% @memberships.each do |membership| %>
-    <div>
-      <p>
-        <%= membership.user.name %>
-        （メンバー）
-      </p>
-
-      <% if @project.owner?(current_user) %>
-        <%= button_to "メンバーを解除",
-                      project_project_membership_path(@project, membership),
-                      method: :delete,
-                      data: {
-                        turbo_confirm: "このメンバーを解除しますか？"
-                      } %>
+<div class="project-layout">
+  <section aria-labelledby="audio-heading">
+    <div class="section-heading">
+      <h2 id="audio-heading">音源とコメント</h2>
+      <% if @project.uploadable_by?(current_user) %>
+        <%= link_to "音源をアップロード", new_project_audio_version_path(@project), class: "button" %>
       <% end %>
     </div>
-  <% end %>
-<% else %>
-  <p>参加メンバーはいません</p>
-<% end %>
+    <div class="stack">
+      <%= render partial: "audio_version", collection: @audio_versions, locals: { project: @project } %>
+      <% if @audio_versions.empty? %>
+        <p class="empty">まだ音源がアップロードされていません。</p>
+      <% end %>
+    </div>
+  </section>
 
-<% if @project.accepted_member?(current_user) %>
-  <%= button_to "プロジェクトから退出する",
-                leave_project_path(@project),
-                method: :delete,
-                data: {
-                  turbo_confirm: "このプロジェクトから退出しますか？"
-                } %>
-<% end %>
-
-<h2>アップロード音源一覧</h2>
-
-<% if @audio_versions.any? %>
-  <ul>
-    <% @audio_versions.each do |audio_version| %>
-    <li data-controller="audio-comment">
-        <h3>Version <%= audio_version.version_number %></h3>  
-
-        <% if audio_version.audio_file.attached? %>
-          <audio controls preload="metadata"
-                data-audio-comment-target="audio">
-            <source
-              src="<%= play_audio_version_path(audio_version) %>"
-              type="<%= audio_version.audio_file.blob.content_type %>">
-
-            お使いのブラウザは音源再生に対応していません
-          </audio>
-        <% end %>
-
-        <% if user_signed_in? %>
-          <h4>コメントを投稿</h4>
-
-          <%= form_with model: [@project, audio_version, Comment.new],
-                        data: { audio_comment_form: true } do |f| %>
-            <div>
-              <%= f.label :body, "コメント" %>
-              <%= f.text_area :body, rows: 3, placeholder: "コメントを入力" %>
-            </div>
-
-            <%= f.hidden_field :playback_seconds,
-                              data: { audio_comment_target: "seconds" } %>
-
-            <p>
-              記録する再生位置：
-              <span data-audio-comment-target="display">未設定</span>
-            </p>
-
-            <button type="button" 
-                          data-action="click->audio-comment#captureTime">
-              現在の再生位置を指定
-            </button>
-
-            <%= f.submit "投稿" %>
-          <% end %>
-
-          <h4>コメント一覧</h4>
-
-          <% if audio_version.comments.any? %>
-            <% audio_version.comments.each do |comment| %>
-              <div>
-                <p>
-                  <strong><%= comment.user.name %></strong>
-                  <%= comment.created_at.strftime("%Y-%m-%d %H時%M分%S秒") %>
-                </p>
-
-                <% if comment.playback_seconds.present? %>
-                  <% minnutes = comment.playback_seconds / 60 %>
-                  <% seconds = comment.playback_seconds % 60 %>
-
-                  <button type ="button"
-                          data-action="click->audio-comment#seekTo"
-                          data-seconds="<%= comment.playback_seconds %>">
-                    <%= format("%02d:%02d", minnutes, seconds) %>
-                  </button>
-                <% end %>
-            
-                <p><%= comment.body %></p>
-
-                <% if user_signed_in? && comment.user_id == current_user.id %>
-
-                  <%= link_to "編集",
-                              edit_project_audio_version_comment_path(
-                              @project,
-                              audio_version,
-                              comment
-                            ) %>
-
-                  <%= button_to "削除",
-                                project_audio_version_comment_path(
-                                  @project,
-                                  audio_version,
-                                  comment
-                                ),
-                                method: :delete,
-                                data: { turbo_confirm: "このコメントを削除しますか？" } %>
-
-                <% end %>   
-              </div>
+  <aside class="stack" aria-label="メンバーとプロジェクト管理">
+    <section class="panel">
+      <h2>メンバー</h2>
+      <ul class="members">
+        <li><strong><%= @project.user.name %></strong> <span class="badge">オーナー</span></li>
+        <% @memberships.each do |membership| %>
+          <li>
+            <strong><%= membership.user.name %></strong> <span class="badge">参加中</span>
+            <% if @project.owner?(current_user) %>
+              <%= button_to "メンバーを解除", project_project_membership_path(@project, membership),
+                            method: :delete, class: "button button--danger",
+                            data: { turbo_confirm: "このメンバーを解除しますか？ このメンバーが投稿した音源とコメント、およびその音源に付いた他のユーザーのコメントも削除されます。" } %>
             <% end %>
-          <% end %>
-
-        <% else %>
-          <p>コメントを投稿するには<%= link_to "ログイン", new_user_session_path %>が必要です</p>
+          </li>
         <% end %>
-
-        <p>
-          ファイル名：
-          <%= audio_version.audio_file.filename %>
-        </p>
-
-        <p>
-          アップロード日時：
-          <%= audio_version.created_at.strftime("%Y-%m-%d %H時%M分%S秒") %>
-        </p>
-
-        <p>
-          アップロード者：
-          <%= audio_version.uploaded_by.name %>
-        </p>
-      </li>
+      </ul>
+      <% if @project.owner?(current_user) %>
+        <%= form_with url: project_project_memberships_path(@project), method: :post do |f| %>
+          <div>
+            <%= f.label :email, "メールアドレスで招待" %>
+            <%= f.email_field :email, required: true, placeholder: "member@example.com" %>
+          </div>
+          <%= f.submit "招待する" %>
+        <% end %>
+      <% end %>
+    </section>
+    <% if @project.owner?(current_user) || @project.accepted_member?(current_user) %>
+      <section class="panel">
+        <h2>プロジェクト管理</h2>
+        <div class="actions">
+          <% if @project.owner?(current_user) %>
+            <%= link_to "編集", edit_project_path(@project), class: "button button--secondary" %>
+            <%= button_to "削除", project_path(@project), method: :delete, class: "button button--danger",
+                          data: { turbo_confirm: "プロジェクトとその音源・コメントを削除しますか？" } %>
+          <% else %>
+            <%= button_to "プロジェクトから退出する", leave_project_path(@project),
+                          method: :delete, class: "button button--danger",
+                          data: { turbo_confirm: "プロジェクトから退出しますか？ あなたが投稿した音源とコメント、およびその音源に付いた他のユーザーのコメントも削除されます。" } %>
+          <% end %>
+        </div>
+      </section>
     <% end %>
-  </ul>
-<% else %>
-  <p>まだ音源がアップロードされていません</p>
-<% end %>
-
-
-
+  </aside>
+</div>

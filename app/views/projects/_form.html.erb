@@ -1,5 +1,5 @@
 <% if @project.errors.any? %>
-  <ul>
+  <ul class="feedback feedback--error" role="alert">
     <% @project.errors.full_messages.each do |message| %>
       <li><%= message %></li>
     <% end %>
@@ -15,8 +15,10 @@
   <div>
     <%= f.label :visibility, "公開範囲" %>
     <%= f.select :visibility,
-                 [["非公開", "private"], ["公開", "public"]] %>
+                 [["非公開", "private"], ["公開", "public"]],
+                 {}, aria: { describedby: "visibility-help" } %>
+    <p id="visibility-help" class="muted">非公開はオーナーと参加中のメンバーのみ。公開は誰でも閲覧・再生できます。</p>
   </div>
 
-  <%= f.submit "プロジェクトを作成" %>
+  <%= f.submit(@project.persisted? ? "変更を保存" : "プロジェクトを作成") %>
 <% end %>
