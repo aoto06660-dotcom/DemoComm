@@ -1,6 +1,7 @@
 class AudioVersionsController < ApplicationController
   before_action :authenticate_user!, except: [:play]
   before_action :set_project, except: [:play]
+  before_action :authorize_upload!, only: [:new, :create]
 
   def new
     @audio_version = @project.audio_versions.new
@@ -31,8 +32,7 @@ class AudioVersionsController < ApplicationController
     @audio_version = AudioVersion.find(params[:id])
     project = @audio_version.project
 
-    unless project.visibility_public? ||
-            (user_signed_in? && project.user_id == current_user.id)
+    unless project.accessible_by?(current_user)
       raise ActiveRecord::RecordNotFound
     end
 
@@ -50,11 +50,15 @@ class AudioVersionsController < ApplicationController
   private
 
   def set_project
-    @project = current_user.projects.find(params[:project_id])
+    @project = Project.find(params[:project_id])
   end
 
   def audio_project_params
     params.require(:audio_version).permit(:audio_file)
+  end
+
+  def authorize_upload!
+    raise ActiveRecord::RecordNotFound unless @project.uploadable_by?(current_user)
   end
 
 end

@@ -1,0 +1,141 @@
+Running 3 tests in a single process (parallelization threshold is 50)
+Run options: --seed 28621
+
+# Running:
+
+E
+
+Error:
+InvitationsControllerTest#test_should_get_index:
+ActiveRecord::RecordNotUnique: PG::UniqueViolation: ERROR:  duplicate key value violates unique constraint "index_users_on_email"
+DETAIL:  Key (email)=(MyString) already exists.
+
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/postgresql/database_statements.rb:152:in `exec'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/postgresql/database_statements.rb:152:in `perform_query'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:572:in `block (2 levels) in raw_execute'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract_adapter.rb:1091:in `block in with_raw_connection'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activesupport-8.1.4/lib/active_support/concurrency/null_lock.rb:9:in `synchronize'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract_adapter.rb:1060:in `with_raw_connection'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:570:in `block in raw_execute'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activesupport-8.1.4/lib/active_support/notifications/instrumenter.rb:58:in `instrument'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract_adapter.rb:1218:in `log'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:569:in `raw_execute'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/postgresql/database_statements.rb:190:in `execute_batch'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:515:in `block (2 levels) in insert_fixtures_set'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/postgresql/referential_integrity.rb:19:in `disable_referential_integrity'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:514:in `block in insert_fixtures_set'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/transaction.rb:648:in `block in within_new_transaction'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activesupport-8.1.4/lib/active_support/concurrency/null_lock.rb:9:in `synchronize'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/transaction.rb:645:in `within_new_transaction'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:386:in `within_new_transaction'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:378:in `transaction'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:513:in `insert_fixtures_set'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/fixtures.rb:684:in `block (2 levels) in insert'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/connection_pool.rb:465:in `with_connection'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/fixtures.rb:683:in `block in insert'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/fixtures.rb:674:in `each'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/fixtures.rb:674:in `insert'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/fixtures.rb:660:in `read_and_insert'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/fixtures.rb:605:in `create_fixtures'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/test_fixtures.rb:291:in `load_fixtures'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/test_fixtures.rb:146:in `setup_fixtures'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/test_fixtures.rb:10:in `before_setup'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activesupport-8.1.4/lib/active_support/testing/setup_and_teardown.rb:40:in `before_setup'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionpack-8.1.4/lib/action_dispatch/testing/integration.rb:350:in `before_setup'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activejob-8.1.4/lib/active_job/test_helper.rb:53:in `before_setup'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/railties-8.1.4/lib/rails/test_help.rb:45:in `before_setup'
+
+bin/rails test test/controllers/invitations_controller_test.rb:4
+
+E
+
+Error:
+ProjectsControllerTest#test_should_get_index:
+ActiveRecord::RecordNotUnique: PG::UniqueViolation: ERROR:  duplicate key value violates unique constraint "index_users_on_email"
+DETAIL:  Key (email)=(MyString) already exists.
+
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/postgresql/database_statements.rb:152:in `exec'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/postgresql/database_statements.rb:152:in `perform_query'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:572:in `block (2 levels) in raw_execute'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract_adapter.rb:1091:in `block in with_raw_connection'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activesupport-8.1.4/lib/active_support/concurrency/null_lock.rb:9:in `synchronize'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract_adapter.rb:1060:in `with_raw_connection'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:570:in `block in raw_execute'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activesupport-8.1.4/lib/active_support/notifications/instrumenter.rb:58:in `instrument'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract_adapter.rb:1218:in `log'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:569:in `raw_execute'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/postgresql/database_statements.rb:190:in `execute_batch'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:515:in `block (2 levels) in insert_fixtures_set'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/postgresql/referential_integrity.rb:19:in `disable_referential_integrity'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:514:in `block in insert_fixtures_set'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/transaction.rb:648:in `block in within_new_transaction'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activesupport-8.1.4/lib/active_support/concurrency/null_lock.rb:9:in `synchronize'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/transaction.rb:645:in `within_new_transaction'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:386:in `within_new_transaction'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:378:in `transaction'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:513:in `insert_fixtures_set'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/fixtures.rb:684:in `block (2 levels) in insert'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/connection_pool.rb:465:in `with_connection'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/fixtures.rb:683:in `block in insert'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/fixtures.rb:674:in `each'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/fixtures.rb:674:in `insert'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/fixtures.rb:660:in `read_and_insert'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/fixtures.rb:605:in `create_fixtures'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/test_fixtures.rb:291:in `load_fixtures'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/test_fixtures.rb:146:in `setup_fixtures'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/test_fixtures.rb:10:in `before_setup'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activesupport-8.1.4/lib/active_support/testing/setup_and_teardown.rb:40:in `before_setup'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionpack-8.1.4/lib/action_dispatch/testing/integration.rb:350:in `before_setup'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activejob-8.1.4/lib/active_job/test_helper.rb:53:in `before_setup'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/railties-8.1.4/lib/rails/test_help.rb:45:in `before_setup'
+
+bin/rails test test/controllers/projects_controller_test.rb:4
+
+E
+
+Error:
+HomeControllerTest#test_should_get_index:
+ActiveRecord::RecordNotUnique: PG::UniqueViolation: ERROR:  duplicate key value violates unique constraint "index_users_on_email"
+DETAIL:  Key (email)=(MyString) already exists.
+
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/postgresql/database_statements.rb:152:in `exec'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/postgresql/database_statements.rb:152:in `perform_query'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:572:in `block (2 levels) in raw_execute'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract_adapter.rb:1091:in `block in with_raw_connection'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activesupport-8.1.4/lib/active_support/concurrency/null_lock.rb:9:in `synchronize'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract_adapter.rb:1060:in `with_raw_connection'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:570:in `block in raw_execute'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activesupport-8.1.4/lib/active_support/notifications/instrumenter.rb:58:in `instrument'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract_adapter.rb:1218:in `log'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:569:in `raw_execute'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/postgresql/database_statements.rb:190:in `execute_batch'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:515:in `block (2 levels) in insert_fixtures_set'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/postgresql/referential_integrity.rb:19:in `disable_referential_integrity'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:514:in `block in insert_fixtures_set'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/transaction.rb:648:in `block in within_new_transaction'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activesupport-8.1.4/lib/active_support/concurrency/null_lock.rb:9:in `synchronize'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/transaction.rb:645:in `within_new_transaction'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:386:in `within_new_transaction'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:378:in `transaction'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:513:in `insert_fixtures_set'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/fixtures.rb:684:in `block (2 levels) in insert'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/connection_adapters/abstract/connection_pool.rb:465:in `with_connection'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/fixtures.rb:683:in `block in insert'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/fixtures.rb:674:in `each'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/fixtures.rb:674:in `insert'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/fixtures.rb:660:in `read_and_insert'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/fixtures.rb:605:in `create_fixtures'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/test_fixtures.rb:291:in `load_fixtures'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/test_fixtures.rb:146:in `setup_fixtures'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activerecord-8.1.4/lib/active_record/test_fixtures.rb:10:in `before_setup'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activesupport-8.1.4/lib/active_support/testing/setup_and_teardown.rb:40:in `before_setup'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionpack-8.1.4/lib/action_dispatch/testing/integration.rb:350:in `before_setup'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/activejob-8.1.4/lib/active_job/test_helper.rb:53:in `before_setup'
+    /Users/aotonagae/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/railties-8.1.4/lib/rails/test_help.rb:45:in `before_setup'
+
+bin/rails test test/controllers/home_controller_test.rb:4
+
+
+
+Finished in 0.121090s, 24.7750 runs/s, 0.0000 assertions/s.
+3 runs, 0 assertions, 0 failures, 3 errors, 0 skips

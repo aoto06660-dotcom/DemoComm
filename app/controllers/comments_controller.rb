@@ -40,8 +40,7 @@ class CommentsController < ApplicationController
   def set_audio_version
     @project = Project.find(params[:project_id])
 
-    unless @project.visibility_public? ||
-           @project.user_id == current_user.id
+    unless @project.accessible_by?(current_user)
       raise ActiveRecord::RecordNotFound
     end
 

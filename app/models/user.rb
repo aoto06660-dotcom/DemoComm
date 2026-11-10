@@ -11,6 +11,10 @@ class User < ApplicationRecord
            inverse_of: :uploaded_by,
            dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :project_memberships, dependent: :destroy
+  has_many :joined_projects,
+           through: :project_memberships,
+           source: :project
 
   has_one_attached :avatar
 

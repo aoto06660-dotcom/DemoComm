@@ -14,9 +14,11 @@
 
 <%= link_to "プロジェクト一覧へ戻る", projects_path %>
 
-<% if user_signed_in? && @project.user_id == current_user.id %>
+<% if @project.uploadable_by?(current_user) %>
   <%= link_to "音源をアップロード", new_project_audio_version_path(@project) %>
+<% end %>
 
+<% if @project.owner?(current_user) %>
   <%= link_to "編集", edit_project_path(@project) %>
 
   <%= button_to "削除",
@@ -24,6 +26,61 @@
                 method: :delete,
                 data: {
                   turbo_confirm: "本当に削除しますか？"
+                } %>
+  <h3>メンバーを招待</h3>
+
+  <%= form_with url: project_project_memberships_path(@project),
+                method: :post do |f| %>
+    <div>
+      <%= f.label :email, "メールアドレス" %>
+      <%= f.email_field :email,
+                        required: true,
+                        placeholder: "member@example.com" %>
+    </div>
+
+    <%= f.submit "招待する" %>
+    
+  <% end %>
+  
+<% end %>
+
+<h2>プロジェクトメンバー</h2>
+
+<div>
+  <p>
+    <strong><%= @project.user.name %></strong>
+    （オーナー）
+  </p>
+</div>
+
+<% if @memberships.any? %>
+  <% @memberships.each do |membership| %>
+    <div>
+      <p>
+        <%= membership.user.name %>
+        （メンバー）
+      </p>
+
+      <% if @project.owner?(current_user) %>
+        <%= button_to "メンバーを解除",
+                      project_project_membership_path(@project, membership),
+                      method: :delete,
+                      data: {
+                        turbo_confirm: "このメンバーを解除しますか？"
+                      } %>
+      <% end %>
+    </div>
+  <% end %>
+<% else %>
+  <p>参加メンバーはいません</p>
+<% end %>
+
+<% if @project.accepted_member?(current_user) %>
+  <%= button_to "プロジェクトから退出する",
+                leave_project_path(@project),
+                method: :delete,
+                data: {
+                  turbo_confirm: "このプロジェクトから退出しますか？"
                 } %>
 <% end %>
 
@@ -112,6 +169,7 @@
                                 ),
                                 method: :delete,
                                 data: { turbo_confirm: "このコメントを削除しますか？" } %>
+
                 <% end %>   
               </div>
             <% end %>

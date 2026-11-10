@@ -2,25 +2,45 @@
 
 <%= link_to "新規プロジェクト作成", new_project_path %>
 
-<% if @projects.any? %>
-  <ul>
-    <% @projects.each do |project| %>
-      <li>
+<h2>作成したプロジェクト</h2>
+
+<% if @my_projects.any? %>
+  <% @my_projects.each do |project| %>
+    <div>
+      <h3>
         <%= link_to project.title, project_path(project) %>
+      </h3>
 
-        <% if project.visibility_public? %>
-          <span>公開</span>
-        <% else %>
-          <span>非公開</span>
-        <% end %>
+      <p>
+        <%= project.visibility_public? ? "公開" : "非公開" %>
+      </p>
 
-        <span>
-          作成日：
-          <%= project.created_at.strftime("%Y年%m月%d日 %H時%M分") %>
-        </span>
-      </li>
-    <% end %>
-  </ul>
+      <span>
+        作成日：
+        <%= project.created_at.strftime("%Y年%m月%d日 %H時%M分") %>
+      </span>
+    </div>
+  <% end %>
 <% else %>
-  <p>まだプロジェクトがありません</p>
+  <p>作成したプロジェクトはありません</p>
+<% end %>
+
+<h2>参加中のプロジェクト</h2>
+
+<% if @joined_projects.any? %>
+  <% @joined_projects.each do |project| %>
+    <div>
+      <h3>
+        <%= link_to project.title, project_path(project) %>
+      </h3>
+
+      <p>オーナー：<%= project.user.name %></p>
+
+      <p>
+        <%= project.visibility_public? ? "公開" : "非公開" %>
+      </p>
+    </div>
+  <% end %>
+<% else %>
+  <p>参加中のプロジェクトはありません</p>
 <% end %>

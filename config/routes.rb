@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "invitations/index"
   get "home/index"
   get "/profile/avatar", to: "profiles#avatar", as: :profile_avatar
   devise_for :users
@@ -21,7 +22,21 @@ Rails.application.routes.draw do
 
   resource :profile, only:[:show, :edit, :update]
 
-  
+  resources :projects do
+    resources :project_memberships,
+              only: [:create, :destroy]
+  end
+
+  resources :invitations, only: [:index] do 
+    member do
+      patch :accept
+      delete :reject
+    end
+  end
+
+  delete "projects/:project_id/leave",
+         to: "project_memberships#leave",
+         as: :leave_project
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

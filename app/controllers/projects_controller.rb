@@ -12,15 +12,17 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
 
-    unless @project.visibility_public? ||
-           (user_signed_in? && @project.user_id == current_user.id)
+    unless @project.accessible_by?(current_user)
       raise ActiveRecord::RecordNotFound
     end
 
     @audio_versions = @project.audio_versions
                       .includes(comments: :user)
                       .order(version_number: :desc)
-    
+
+    @memberships = @project.project_memberships
+                           .accepted
+                           .includes(:user)
   end
 
   def new
@@ -56,7 +58,11 @@ class ProjectsController < ApplicationController
   end
 
   def mine
-    @projects = current_user.projects.order(created_at: :desc)
+    @my_projects = current_user.projects.order(created_at: :desc)
+
+    @joined_projects = current_user.joined_projects
+                                   .where(project_memberships: { status: :accepted })
+                                   .order(created_at: :desc)
   end
 
   private

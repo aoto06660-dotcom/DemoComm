@@ -1,0 +1,31 @@
+<h1>あなた宛の招待</h1>
+
+  <% if @invitations.any? %>
+
+    <% @invitations.each do |invitation| %>
+      <div>
+        <h3><%= invitation.project.title %></h3>
+
+        <p>
+          プロジェクト所有者：
+          <%= invitation.project.user.name %>
+        </p>
+
+        <p>状態：承認待ち</p>
+
+        <%= button_to "承認する",
+                      accept_invitation_path(invitation),
+                      method: :patch %>
+
+        <%= button_to "拒否する",
+                      reject_invitation_path(invitation),
+                      method: :delete,
+                      data: {
+                        turbo_confirm: "この招待を拒否しますか？"
+                        } %>
+      </div>
+    <% end %>
+
+  <% else %>
+    <p>現在届いている招待はありません</p>
+  <% end %>
