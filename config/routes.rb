@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     resources :audio_versions, only: [:new, :create] do
       resources :comments, only: [:create, :edit, :update, :destroy]
     end
+
+    resources :project_memberships, only: [:create, :destroy]
   end
 
   resources :audio_versions, only: [] do
@@ -21,11 +23,6 @@ Rails.application.routes.draw do
   end
 
   resource :profile, only:[:show, :edit, :update]
-
-  resources :projects do
-    resources :project_memberships,
-              only: [:create, :destroy]
-  end
 
   resources :invitations, only: [:index] do 
     member do

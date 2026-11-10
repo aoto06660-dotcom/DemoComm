@@ -18,7 +18,7 @@ class InvitationsController < ApplicationController
     if @invitation.destroy
       redirect_to invitations_path, notice: "招待を拒否しました"
     else
-      recirect_to invitations_path, alert: "招待の拒否に失敗しました"
+      redirect_to invitations_path, alert: "招待の拒否に失敗しました"
     end
   end
 
