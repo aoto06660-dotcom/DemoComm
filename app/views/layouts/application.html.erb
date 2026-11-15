@@ -28,7 +28,9 @@
     <a class="skip-link" href="#main-content">本文へ移動</a>
     <header class="site-header">
       <div class="site-header__inner">
-        <%= link_to "DemoComm", home_index_path, class: "brand" %>
+        <%= link_to home_index_path, class: "brand" do %>
+          <%= image_tag "DemoComm_logo.png", alt: "DemoComm", width: 216, height: 72 %>
+        <% end %>
         <nav aria-label="メインナビゲーション">
           <%= link_to "公開プロジェクト", projects_path, aria: { current: current_page?(projects_path) ? "page" : nil } %>
           <% if user_signed_in? %>
@@ -40,7 +42,24 @@
           <% end %>
         </nav>
         <% if user_signed_in? %>
-          <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "button button--secondary" %>
+          <div class="site-header__account">
+            <details class="account-menu" data-controller="account-menu"
+                     data-action="click@document->account-menu#closeOutside keydown.esc->account-menu#closeAndFocus turbo:before-cache@document->account-menu#close">
+              <summary class="account-menu__trigger" data-account-menu-target="trigger">
+                <%= image_tag(current_user.avatar.attached? ? profile_avatar_path : "profile_no_image.png",
+                              alt: "", width: 32, height: 32, class: "account-menu__avatar") %>
+                <span class="account-menu__name"><%= current_user.name %></span>
+              </summary>
+              <div class="account-menu__links">
+                <%= link_to "プロフィール編集", edit_profile_path %>
+                <%= link_to "アカウントの設定", edit_user_registration_path %>
+                <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "account-menu__logout",
+                              form: { data: { turbo_confirm: "ログアウトしますか？" } } %>
+              </div>
+            </details>
+            <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "button button--secondary",
+                              form: { data: { turbo_confirm: "ログアウトしますか？" } } %>
+          </div>
         <% end %>
       </div>
     </header>

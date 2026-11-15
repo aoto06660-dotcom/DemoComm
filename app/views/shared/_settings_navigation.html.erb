@@ -1,0 +1,7 @@
+<nav class="settings-nav panel" aria-label="設定">
+  <h2>設定</h2>
+  <%= link_to "プロフィール編集", edit_profile_path,
+              aria: { current: active == :profile ? "page" : nil } %>
+  <%= link_to "アカウント設定", edit_user_registration_path,
+              aria: { current: active == :account ? "page" : nil } %>
+</nav>

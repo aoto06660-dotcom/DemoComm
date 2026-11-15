@@ -1,0 +1,7 @@
+<%= link_to "プロジェクトに戻る", project_path(@project, anchor: dom_id(@audio_version)) %>
+
+<article class="panel author-profile">
+  <h1><%= @author.name %></h1>
+  <h3>プロフィール文</h3>
+  <p class="comment__body"><%= @author.bio.presence || "自己紹介は未設定です。" %></p>
+</article>

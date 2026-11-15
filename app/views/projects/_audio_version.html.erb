@@ -41,7 +41,7 @@
         <% audio_version.comments.each do |comment| %>
           <article class="comment">
             <div class="actions">
-              <strong><%= comment.user.name %></strong>
+              <strong><%= link_to comment.user.name, author_project_audio_version_comment_path(project, audio_version, comment) %></strong>
               <time class="muted" datetime="<%= comment.created_at.iso8601 %>"><%= comment.created_at.strftime("%Y/%m/%d %H:%M") %></time>
               <% if comment.playback_seconds.present? && audio_version.audio_file.attached? %>
                 <% minutes, seconds = comment.playback_seconds.divmod(60) %>

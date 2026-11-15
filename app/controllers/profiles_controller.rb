@@ -16,6 +16,14 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def comment_author
+    @project = Project.find(params[:project_id])
+    raise ActiveRecord::RecordNotFound unless @project.accessible_by?(current_user)
+
+    @audio_version = @project.audio_versions.find(params[:audio_version_id])
+    @author = @audio_version.comments.find(params[:id]).user
+  end
+
   def avatar
     user = current_user
     

@@ -10,7 +10,9 @@ Rails.application.routes.draw do
     end
 
     resources :audio_versions, only: [:new, :create] do
-      resources :comments, only: [:create, :edit, :update, :destroy]
+      resources :comments, only: [:create, :edit, :update, :destroy] do
+        get :author, on: :member, to: "profiles#comment_author"
+      end
     end
 
     resources :project_memberships, only: [:create, :destroy]
