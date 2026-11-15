@@ -25,5 +25,8 @@ module DemoComm
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.active_storage.draw_routes = false
+
+    config.i18n.default_locate = :ja
+    config.time_zone = "Tokyo"
   end
 end
