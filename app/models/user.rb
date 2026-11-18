@@ -24,6 +24,21 @@ class User < ApplicationRecord
   validates :bio, length: { maximum: 500 }, allow_blank: true
   validate :avatar_validation
 
+  def send_reset_password_instructions
+    return if guest?
+
+    super
+  end
+
+  def reset_password(new_password, new_password_confirmation)
+    if guest?
+      errors.add(:base, "ゲストのパスワードは変更できません")
+      return false
+    end
+
+    super
+  end
+
   private
 
   def avatar_validation

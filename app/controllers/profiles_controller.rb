@@ -1,5 +1,6 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_user!
+  before_action :reject_guest, only: [:edit, :update]
   before_action :set_user, only: [:show, :edit, :update]
 
   def show
@@ -36,6 +37,10 @@ class ProfilesController < ApplicationController
 
   private
   
+  def reject_guest
+    head :forbidden if current_user.guest?
+  end
+
   def profile_params
     params.require(:user).permit(:name, :bio, :avatar)
   end

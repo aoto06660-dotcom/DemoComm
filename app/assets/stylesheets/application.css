@@ -9,6 +9,7 @@
  * Consider organizing styles into separate files for maintainability.
  */
 
+/* 配色、書体、見出し、リンクの共通スタイル */
 :root {
   color-scheme: dark;
   --background: #191925;
@@ -46,6 +47,7 @@ h1 { font-size: clamp(1.75rem, 4vw, 2.75rem); line-height: 1.2; }
 h2 { font-size: 1.25rem; }
 h3 { font-size: 1rem; }
 
+/* ヘッダー、ロゴ、プロフィールのドロップダウン */
 .site-header { border-bottom: 1px solid var(--border); background: var(--surface); }
 .site-header__inner, .page {
   width: min(100% - 2rem, 76rem);
@@ -149,6 +151,7 @@ h3 { font-size: 1rem; }
 .skip-link { position: absolute; inset: 0 auto auto 1rem; padding: 0.5rem 1rem; background: var(--surface); }
 .skip-link:not(:focus) { clip-path: inset(50%); }
 
+/* トップページの背景画像、カード、レスポンシブレイアウト */
 .hero, .panel, .empty {
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -178,6 +181,7 @@ h3 { font-size: 1rem; }
   .project-layout { grid-template-columns: minmax(0, 1fr) minmax(16rem, 21rem); }
 }
 
+/* 公開範囲・役割のラベルとメンバー一覧 */
 .badge {
   display: inline-block;
   padding: 0.15rem 0.55rem;
@@ -192,6 +196,7 @@ h3 { font-size: 1rem; }
 .members li { padding-block: 0.625rem; border-bottom: 1px solid var(--border); }
 .members form { margin-block-start: 0.5rem; }
 
+/* 音源プレイヤー、バージョンの折りたたみ、コメント欄 */
 .version { padding-block: 0; scroll-margin-block-start: 1rem; }
 .version:target { border-color: var(--accent); }
 .version summary { min-height: 44px; padding-block: 0.65rem; cursor: pointer; }
@@ -204,6 +209,7 @@ h3 { font-size: 1rem; }
 .comment + .comment { border-top: 1px solid var(--border); }
 .comment__body { margin-block: 0.5rem; white-space: pre-wrap; }
 
+/* フォームとボタンの共通スタイル */
 form:not(.button_to) { display: grid; gap: 0.75rem; max-width: 42rem; }
 label { display: block; margin-block-end: 0.25rem; }
 input:not([type="hidden"], [type="checkbox"], [type="radio"], [type="submit"]), textarea, select {
@@ -226,7 +232,8 @@ textarea { resize: vertical; }
   justify-content: center;
   justify-self: start;
   min-height: 44px;
-  padding: 0.45rem 0.85rem;
+  padding: 0.2rem 0.85rem;
+  margin: 0.3rem 0;
   border: 1px solid transparent;
   border-radius: 0.45rem;
   background: var(--accent);
@@ -237,10 +244,11 @@ textarea { resize: vertical; }
   cursor: pointer;
 }
 .button--secondary, .button--danger { border-color: var(--border); background: var(--field); color: var(--text); }
-.button--danger { color: var(--danger); }
+.button--danger { color: var(--danger); }z
 .button:hover, input[type="submit"]:hover, button[type="submit"]:hover { filter: brightness(1.13); }
 [hidden] { display: none !important; }
 
+/* 操作結果の通知と入力エラーの表示 */
 .feedback, #error_explanation {
   margin-block-end: 1rem;
   padding: 0.75rem 1rem;
@@ -256,6 +264,7 @@ ul.feedback { padding-inline-start: 2rem; }
 .button--secondary:hover { color: var(--text); }
 .button--danger:hover { color: var(--danger); }
 
+/* 設定画面のサイドメニューとコメント投稿者のプロフィール */
 .settings-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);

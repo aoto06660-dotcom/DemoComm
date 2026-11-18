@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   get "invitations/index"
   get "home/index"
   get "/profile/avatar", to: "profiles#avatar", as: :profile_avatar
-  devise_for :users
+  devise_for :users, controllers: { registrations: "users/registrations" }
+
+  post "guest_sign_in", to: "guest_sessions#create", as: :guest_sign_in
 
   resources :projects do
     collection do

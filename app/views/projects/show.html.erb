@@ -1,5 +1,4 @@
 <header class="project-heading">
-  <%= link_to "公開プロジェクト一覧", projects_path %>
   <h1><%= @project.title %></h1>
   <div class="actions">
     <span class="badge">公開範囲 <%= @project.visibility_public? ? "公開" : "非公開" %></span>

@@ -51,8 +51,10 @@
                 <span class="account-menu__name"><%= current_user.name %></span>
               </summary>
               <div class="account-menu__links">
-                <%= link_to "プロフィール編集", edit_profile_path %>
-                <%= link_to "アカウントの設定", edit_user_registration_path %>
+                <% unless current_user.guest? %>
+                  <%= link_to "プロフィール編集", edit_profile_path %>
+                  <%= link_to "アカウントの設定", edit_user_registration_path %>
+                <% end %>
                 <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "account-menu__logout",
                               form: { data: { turbo_confirm: "ログアウトしますか？" } } %>
               </div>

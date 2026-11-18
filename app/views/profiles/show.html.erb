@@ -15,14 +15,18 @@
   <%= @user.name %>
 </p>
 
-<p>
-  メールアドレス：
-  <%= @user.email %>
-</p>
+<% unless @user.guest? %>
+  <p>
+    メールアドレス：
+    <%= @user.email %>
+  </p>
+<% end %>
 
 <p>
   プロフィール文：
   <%= @user.bio.presence || "未設定" %>
 </p>
 
-<%= link_to "プロフィール/アカウントの設定", edit_profile_path %>
+<% unless @user.guest? %>
+  <%= link_to "プロフィール/アカウントの設定", edit_profile_path %>
+<% end %>
