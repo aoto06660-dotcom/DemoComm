@@ -20,11 +20,6 @@ class GuestAccessTest < ActionDispatch::IntegrationTest
     assert @guest.projects.exists?(title: "ゲストのデモ")
   end
 
-  setup do
-    @guest = User.create!(name: "ゲスト", email: "guest@email.com",
-                          password: SecureRandom.urlsafe_base64(32), guest: true)
-  end
-
   test "guest cannot edit settings or change and delete the account directly" do
     post guest_sign_in_path
 
